@@ -1,0 +1,9 @@
+# Normal User set the configurations of DATABASE in (user_Config) script by set 3 parameters
+
+# DataBase Name => DBNAME
+# DataBase UserName => DBUSERNM
+# DataBase Password => DBPASSWD
+
+#Then he must run the main script with (Sudo) command => sudo ./main
+
+#The Backup path will br shown in the terminal, so he can access it.

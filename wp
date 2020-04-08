@@ -1,0 +1,32 @@
+#!/bin/bash
+# 1 -> downloading failure
+# 2 -> directory failure
+
+
+function install_wp {
+
+Download the latest WordPress package and extract it by issuing the commands below on the terminal:
+  wget -c http://wordpress.org/latest.tar.gz
+  if [[ ! $(ls | grep latest) ]];then
+      echo "________________ERROR_________________"
+      echo "downloading fail, please run it again!"
+      return 1
+  fi
+
+  tar -xzvf latest.tar.gz
+  rm latest.tar.gz -f
+
+  Then move the WordPress files from the extracted folder to the Apache default root directory, /var/www/html/:
+  if [ ! -d /var/www/html/wordpress ];then
+    echo "_____________ERROR___________"
+    echo "your directory already exist!"
+    rm -r wordpress
+    return 2
+  fi
+
+  mv wordpress /var/www/html/
+
+  google-chrome http://localhost/wordpress
+  echo "WordPress installed successfully!"
+
+}

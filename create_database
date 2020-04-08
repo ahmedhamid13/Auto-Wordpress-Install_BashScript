@@ -1,0 +1,16 @@
+#!/bin/bash
+source DB
+# 0 -> success operation
+# 1 -> operation failed
+
+function createDatabase {
+	CHK=$( mysql -u${DBSETTINGS["DBUSER"]} -p${DBSETTINGS["DBPASS"]} -e "SHOW DATABASES LIKE '${DBNAME}';" )
+	# echo $CHK
+	if [[ -z $CHK ]];then
+		mysql -u${DBSETTINGS["DBUSER"]} -p${DBSETTINGS["DBPASS"]} -e "CREATE DATABASE '${DBNAME}'; EXIT;"
+		exit 0;
+	else
+		echo "this database is exited!"
+		exit 1;
+	fi
+}

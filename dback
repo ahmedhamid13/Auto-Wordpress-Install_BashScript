@@ -1,0 +1,26 @@
+#!/bin/bash
+
+source DB
+
+
+DBBACK=/DataBackUP/db_dbackup/
+WPBACK=/DataBackUP/wp_dbackup/
+DATE=$(date)
+
+function dataBackup {
+
+if [ -d  //DataBacKUP ];then
+    mkdir //DataBackUP
+fi
+
+
+crontab -l > mycron
+
+echo "*/12 * * * *  mysqldump --host=${DBSETTINGS["DBHOST"]} --user=${DBSETTINGS["DBUSER"]} --password=${DBSETTINGS["DBPASS"]} ${DBSETTINGS["DBNAME"]}  > $BACKUP_DIR/"${CURTIME}" " >> mycron
+echo "*/1 * * * * echo  cp -r /var/www/html/wordpress /backup/website/"${CURTIME}" " >> mycron
+crontab mycron
+rm mycron
+
+echo "mysql_backup in $DBBACK"
+echo "website_backup in $WPBACK"
+}

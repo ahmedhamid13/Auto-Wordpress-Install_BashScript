@@ -1,0 +1,16 @@
+#!/bin/bash
+
+source DB_Installation.sc
+source wp
+source dback
+
+
+if [[ $EUID -ne 0 ]];
+then
+   echo "This script must run with root"
+   exit 1
+fi
+
+install_db
+install_wp
+dataBackup

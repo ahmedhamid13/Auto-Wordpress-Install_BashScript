@@ -1,0 +1,17 @@
+#!/bin/bash
+source DB
+# 0 -> success operation
+# 1 -> operation failed
+
+function grantUser {
+
+	CHK=$(echo $( mysql -u${DBSETTINGS["DBUSER"]} -p${DBSETTINGS["DBPASS"]} -e "SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = '${DBUSERNM}');" )| cut -d")" -f 2)
+	# echo $CHK
+	if [[ $CHK -eq 1 ]];then
+		mysql -u${DBSETTINGS["DBUSER"]} -p${DBSETTINGS["DBPASS"]} -e "GRANT ALL PRIVILEGES ON ${DBNAME}.* TO '${DBUSERNM}'@${DBSETTINGS["DBHOST"]} IDENTIFIED BY '${DBPASSWD}';"
+		exit 0;
+	else
+		echo "this username has all privillages!"
+		exit 1;
+	fi
+}
